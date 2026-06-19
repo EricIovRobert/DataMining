@@ -4,6 +4,7 @@
 \usepackage{amsmath}
 \usepackage[margin=1in]{geometry}
 \usepackage{hyperref}
+\usepackage{float}
 
 \title{Heart Disease Prediction using PCA, Naive Bayes and Decision Trees}
 \author{Eric Iov}
@@ -64,9 +65,9 @@ The dataset is nearly complete. Only 6 values are missing across the entire data
 
 The target variable is slightly imbalanced: 164 records (54.1\%) belong to the negative class (no disease) and 139 records (45.9\%) to the positive class (disease), as shown in Figure \ref{fig:class_dist}. The difference is small enough that no resampling technique is required.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{class_distribution.png}
+    \includegraphics[width=0.42\textwidth]{class_distribution.png}
     \caption{Class distribution of the target variable}
     \label{fig:class_dist}
 \end{figure}
@@ -75,9 +76,9 @@ The target variable is slightly imbalanced: 164 records (54.1\%) belong to the n
 
 The distributions of all features are shown in Figure \ref{fig:hist}. Binary features such as \texttt{sex}, \texttt{fbs}, and \texttt{exang} are heavily concentrated on one value, reflecting the demographics of the patient sample (predominantly male, with most patients not reporting exercise-induced angina). Among the continuous features, \texttt{age} and \texttt{chol} approximate a normal distribution, while \texttt{oldpeak} is right-skewed with a large number of zero values.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{feature_distributions.png}
+    \includegraphics[width=0.85\textwidth]{feature_distributions.png}
     \caption{Distribution of all features}
     \label{fig:hist}
 \end{figure}
@@ -86,9 +87,9 @@ The distributions of all features are shown in Figure \ref{fig:hist}. Binary fea
 
 The correlation matrix in Figure \ref{fig:corr} shows the pairwise linear relationships between all features and the target. The strongest positive correlations with the target are found in \texttt{thal} (0.53), \texttt{ca} (0.46), \texttt{exang} (0.43), and \texttt{cp} (0.41). Maximum heart rate (\texttt{thalach}) is negatively correlated with the target (-0.42), meaning higher heart rate is associated with lower disease probability. Features such as \texttt{fbs} (0.03) and \texttt{restecg} (0.17) show weak correlation with the target and are expected to contribute less to classification.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{correlation_matrix.png}
+    \includegraphics[width=0.65\textwidth]{correlation_matrix.png}
     \caption{Correlation matrix of all features}
     \label{fig:corr}
 \end{figure}
@@ -111,9 +112,9 @@ Figure \ref{fig:pca} shows the explained variance ratio for each principal compo
 
 To retain at least 90\% of the total variance, 10 principal components are required, reducing the feature space from 13 to 10 dimensions. This reduction reflects the low redundancy among the original clinical features.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{pca_variance.png}
+    \includegraphics[width=0.7\textwidth]{pca_variance.png}
     \caption{Explained variance ratio per principal component and cumulative curve}
     \label{fig:pca}
 \end{figure}
@@ -142,9 +143,9 @@ Accuracy   & \multicolumn{3}{c}{0.88} & 60 \\
 \label{tab:nb_results}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{nb_0.35_cm.png}
+    \includegraphics[width=0.5\textwidth]{nb_0.35_cm.png}
     \caption{Confusion matrix for the Naive Bayes classifier at threshold 0.35}
     \label{fig:nb_cm}
 \end{figure}
@@ -171,16 +172,16 @@ Accuracy   & \multicolumn{3}{c}{0.80} & 60 \\
 \label{tab:dt_results}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.65\textwidth]{dt_acc_depth.png}
+    \includegraphics[width=0.55\textwidth]{dt_acc_depth.png}
     \caption{Decision Tree accuracy for different maximum depth values}
     \label{fig:dt_depth}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{dt_final_cm.png}
+    \includegraphics[width=0.5\textwidth]{dt_final_cm.png}
     \caption{Confusion matrix for the Decision Tree classifier at depth 4 with class weight 4}
     \label{fig:dt_cm}
 \end{figure}
@@ -206,9 +207,9 @@ Decision Tree (w=4)      & 0.80 & 0.69 & 0.92 & 0.79 \\
 \label{tab:comparison}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{final_comparison.png}
+    \includegraphics[width=0.7\textwidth]{final_comparison.png}
     \caption{Side-by-side metric comparison of both classifiers}
     \label{fig:comparison}
 \end{figure}
