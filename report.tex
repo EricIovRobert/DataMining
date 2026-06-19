@@ -14,11 +14,20 @@
 \maketitle
 
 \begin{abstract}
-% TODO: fill in after all steps are done (2-3 paragraphs)
+This project addresses the problem of heart disease prediction using the Cleveland Heart Disease dataset from the UCI Machine Learning Repository. The dataset contains 303 records and 13 clinical features, with a binary target indicating the presence or absence of heart disease.
+
+The processing pipeline consists of data cleaning, feature standardization, and dimensionality reduction using Principal Component Analysis, followed by classification using Gaussian Naive Bayes and Decision Trees. Both classifiers were tuned to maximize recall for the disease class, as missing a positive case carries a higher cost in a medical context.
+
+Naive Bayes achieved the best results, with 88\% accuracy and a disease recall of 0.92 at a decision threshold of 0.35. The Decision Tree reached the same recall through class weighting, but at a lower accuracy of 80\%. Naive Bayes proved the more effective classifier for this dataset, offering a better balance between precision and recall.
 \end{abstract}
 
 \section{Introduction}
-% TODO: fill in — problem description, motivation, state of the art references, brief solution overview
+
+Cardiovascular disease is one of the leading causes of mortality worldwide, and early detection remains a key challenge in clinical practice. Machine learning methods have been widely applied to the problem of heart disease prediction, with the Cleveland Heart Disease dataset from the UCI Machine Learning Repository serving as a standard benchmark for evaluating classification approaches.
+
+The original dataset was introduced by Detrano et al. \cite{detrano1989}, who developed a probabilistic algorithm for the diagnosis of coronary artery disease. Since then, numerous studies have applied a range of classifiers to the same data. A recent comparative study by Alfadhly et al. \cite{alfadhly2025} evaluated multiple machine learning models on heart disease datasets and reported varying accuracy depending on the method used. A machine learning framework evaluated on the same 303-sample Cleveland dataset reported a Random Forest accuracy of 91\% and an F1-score of 0.89 \cite{mlframework2025}.
+
+This project applies Principal Component Analysis for dimensionality reduction followed by two classifiers, Gaussian Naive Bayes and Decision Trees, to the Cleveland dataset. Both models were tuned to prioritize recall for the disease class, reflecting the asymmetric cost of misclassification in a medical context. The report is structured as follows: Section 3 describes the dataset, Section 4 presents the processing flow, Section 5 reports the results and comparison, and Section 6 draws conclusions.
 
 \section{Description of the Dataset}
 
@@ -214,6 +223,22 @@ The results suggest that Gaussian Naive Bayes is better suited for this dataset,
 
 \begin{thebibliography}{9}
 
+\bibitem{detrano1989}
+    R. Detrano, A. Jánosi, W. Steinbrunn, M. Pfisterer, J. Schmid, S. Sandhu, K. Guppy, S. Lee, V. Froelicher.
+    International application of a new probability algorithm for the diagnosis of coronary artery disease.
+    \textit{American Journal of Cardiology}, 1989.
+
+\bibitem{alfadhly2025}
+    A. Alfadhly et al.
+    Effectiveness of machine learning models in diagnosis of heart disease: a comparative study.
+    \textit{Scientific Reports}, 15, 2025.
+    \url{https://doi.org/10.1038/s41598-025-09423-y}
+
+\bibitem{mlframework2025}
+    A comprehensive machine learning framework for heart disease prediction: performance evaluation and future perspectives.
+    \textit{arXiv preprint}, 2025.
+    \url{https://arxiv.org/abs/2505.09969}
+
 \bibitem{janosi1989}
     A. Janosi, W. Steinbrunn, M. Pfisterer, R. Detrano.
     \textit{Heart Disease Dataset}.
@@ -224,10 +249,9 @@ The results suggest that Gaussian Naive Bayes is better suited for this dataset,
     UCI Machine Learning Repository.
     \url{https://archive.ics.uci.edu/dataset/45/heart+disease}
 
-\bibitem{detrano1989}
-    R. Detrano, A. Jánosi, W. Steinbrunn, M. Pfisterer, J. Schmid, S. Sandhu, K. Guppy, S. Lee, V. Froelicher.
-    International application of a new probability algorithm for the diagnosis of coronary artery disease.
-    \textit{American Journal of Cardiology}, 1989.
+
+
+
 
 \end{thebibliography}
 
