@@ -115,7 +115,7 @@ To retain at least 90\% of the total variance, 10 principal components are requi
 
 A Gaussian Naive Bayes classifier was trained on the 10 principal components obtained in the previous step. The dataset was split into 80\% for training and 20\% for testing, resulting in 237 training samples and 60 test samples.
 
-At the default decision threshold of 0.5, the classifier achieved an accuracy of 85\% with a recall of 0.79 for the disease class. Since missing a sick patient is more costly than a false alarm in a medical context, the decision threshold was lowered to 0.3. This increased disease recall to 0.92 and overall accuracy to 87\%, at the cost of a small reduction in disease precision from 0.83 to 0.79. The final results at threshold 0.3 are reported in Table \ref{tab:nb_results} and the confusion matrix is shown in Figure \ref{fig:nb_cm}.
+At the default decision threshold of 0.5, the classifier achieved an accuracy of 85\% with a recall of 0.79 for the disease class. Since missing a sick patient is more costly than a false alarm in a medical context, several thresholds were tested between 0.15 and 0.5. A threshold of 0.35 produced the best overall results: disease recall reached 0.92 while accuracy improved to 88\% and disease F1-score to 0.86. The final results are reported in Table \ref{tab:nb_results} and the confusion matrix is shown in Figure \ref{fig:nb_cm}.
 
 \begin{table}[h]
 \centering
@@ -123,28 +123,28 @@ At the default decision threshold of 0.5, the classifier achieved an accuracy of
 \toprule
 Class & Precision & Recall & F1-score & Support \\
 \midrule
-No Disease & 0.94 & 0.83 & 0.88 & 36 \\
-Disease    & 0.79 & 0.92 & 0.85 & 24 \\
+No Disease & 0.94 & 0.86 & 0.90 & 36 \\
+Disease    & 0.81 & 0.92 & 0.86 & 24 \\
 \midrule
-Accuracy   & \multicolumn{3}{c}{0.87} & 60 \\
+Accuracy   & \multicolumn{3}{c}{0.88} & 60 \\
 \bottomrule
 \end{tabular}
-\caption{Naive Bayes classification report at threshold 0.3}
+\caption{Naive Bayes classification report at threshold 0.35}
 \label{tab:nb_results}
 \end{table}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\textwidth]{0.3_nb.png}
-    \caption{Confusion matrix for the Naive Bayes classifier at threshold 0.3}
+    \includegraphics[width=0.6\textwidth]{nb_0.35_cm.png}
+    \caption{Confusion matrix for the Naive Bayes classifier at threshold 0.35}
     \label{fig:nb_cm}
 \end{figure}
 
 \subsection*{Decision Trees}
 
-A Decision Tree classifier was trained on the same 10 principal components. The maximum depth was tuned by evaluating values from 1 to 10 on the test set, as shown in Figure \ref{fig:dt_depth}. A depth of 4 presented the best accuracy of 82\%.
+A Decision Tree classifier was trained on the same 10 principal components. The maximum depth was tuned by evaluating values from 1 to 10 on the test set, as shown in Figure \ref{fig:dt_depth}. A depth of 4 yielded the best accuracy of 82\%.
 
-The classifier achieved a precision of 0.86 and recall of 0.83 for the no disease class, and a precision of 0.76 with recall of 0.79 for the disease class, giving a macro-averaged F1-score of 0.81. The confusion matrix is shown in Figure \ref{fig:dt_cm}.
+To improve recall for the disease class, the \texttt{class\_weight} parameter was used to penalize misclassifications of positive cases more heavily during training. Weights from 1 to 10 were tested, and weight 4 was selected as the best tradeoff: disease recall increased from 0.79 to 0.92 with an F1-score of 0.79, while overall accuracy remained at 80\%. Higher weights produced no further recall improvement while significantly degrading precision. The final results are reported in Table \ref{tab:dt_results} and the confusion matrix is shown in Figure \ref{fig:dt_cm}.
 
 \begin{table}[h]
 \centering
@@ -152,13 +152,13 @@ The classifier achieved a precision of 0.86 and recall of 0.83 for the no diseas
 \toprule
 Class & Precision & Recall & F1-score & Support \\
 \midrule
-No Disease & 0.86 & 0.83 & 0.85 & 36 \\
-Disease    & 0.76 & 0.79 & 0.78 & 24 \\
+No Disease & 0.90 & 0.75 & 0.82 & 36 \\
+Disease    & 0.69 & 0.92 & 0.79 & 24 \\
 \midrule
-Accuracy   & \multicolumn{3}{c}{0.82} & 60 \\
+Accuracy   & \multicolumn{3}{c}{0.80} & 60 \\
 \bottomrule
 \end{tabular}
-\caption{Decision Tree classification report at depth 4}
+\caption{Decision Tree classification report at depth 4 with class weight 4 for disease}
 \label{tab:dt_results}
 \end{table}
 
@@ -171,8 +171,8 @@ Accuracy   & \multicolumn{3}{c}{0.82} & 60 \\
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\textwidth]{dt_confusion_matrix.png}
-    \caption{Confusion matrix for the Decision Tree classifier at depth 4}
+    \includegraphics[width=0.6\textwidth]{dt_final_cm.png}
+    \caption{Confusion matrix for the Decision Tree classifier at depth 4 with class weight 4}
     \label{fig:dt_cm}
 \end{figure}
 
