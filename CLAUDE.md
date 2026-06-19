@@ -24,6 +24,7 @@ Heart Disease Prediction (Project 4)
 
 ## Report Writing Rules
 
+- Always use the exact filename the user provides when referencing figures in the report
 - No bullet points — use prose, tables, or flowing sentences instead
 - Write naturally, not in AI-style lists
 - No horizontal lines (---) as separators in explanations

@@ -85,7 +85,29 @@ The correlation matrix in Figure \ref{fig:corr} shows the pairwise linear relati
 \end{figure}
 
 \section{Description of the Processing Flow}
-% TODO: fill in after Steps 2 and 3
+
+\subsection*{Data Preprocessing}
+
+The preprocessing stage consisted of two steps: handling missing values and feature standardization.
+
+As noted in the dataset description, 6 values were missing across the \texttt{ca} and \texttt{thal} columns. Since this represents only 2\% of the data, the affected rows were removed rather than imputed, leaving 297 records for further processing.
+
+All 13 features were then standardized using z-score normalization, which transforms each feature to have zero mean and unit variance. This step is necessary because PCA, applied in the next stage, is sensitive to the scale of the input features. Without standardization, features with larger numerical ranges such as \texttt{chol} would dominate the principal components regardless of their actual relevance.
+
+\subsection*{Feature Extraction with PCA}
+
+Principal Component Analysis was applied to the standardized features to reduce dimensionality while preserving the most relevant variance in the data. PCA works by projecting the original features onto a new set of orthogonal axes, ordered by the amount of variance they explain.
+
+Figure \ref{fig:pca} shows the explained variance ratio for each principal component, along with the cumulative curve. The first component accounts for 23.7\% of the total variance, and the contribution of each subsequent component decreases gradually. There is no sharp elbow in the curve, which indicates that the variance is distributed relatively evenly across the original features and that no small subset of components captures most of the information.
+
+To retain at least 90\% of the total variance, 10 principal components are required, reducing the feature space from 13 to 10 dimensions. This reduction reflects the low redundancy among the original clinical features.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{pca_variance.png}
+    \caption{Explained variance ratio per principal component and cumulative curve}
+    \label{fig:pca}
+\end{figure}
 
 \section{Results}
 % TODO: fill in after Steps 4, 5, and 6
