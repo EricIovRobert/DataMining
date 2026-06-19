@@ -176,10 +176,41 @@ Accuracy   & \multicolumn{3}{c}{0.80} & 60 \\
     \label{fig:dt_cm}
 \end{figure}
 
-% TODO: fill in comparison after Step 6
+\subsection*{Comparison}
+
+Both classifiers were tuned to achieve a disease recall of 0.92, using different mechanisms suited to each model. Table \ref{tab:comparison} and Figure \ref{fig:comparison} summarize the final results.
+
+Naive Bayes achieves a higher accuracy of 88\% and a disease precision of 0.81, giving an F1-score of 0.86. The Decision Tree reaches the same recall at a lower accuracy of 80\% and disease precision of 0.69, resulting in an F1-score of 0.79. Naive Bayes is the better performing classifier overall, particularly in how it balances recall with precision.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Classifier & Accuracy & Precision & Recall & F1-score \\
+           &          & (Disease) & (Disease) & (Disease) \\
+\midrule
+Naive Bayes (t=0.35)     & 0.88 & 0.81 & 0.92 & 0.86 \\
+Decision Tree (w=4)      & 0.80 & 0.69 & 0.92 & 0.79 \\
+\bottomrule
+\end{tabular}
+\caption{Comparison of classifier performance on the test set}
+\label{tab:comparison}
+\end{table}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{final_comparison.png}
+    \caption{Side-by-side metric comparison of both classifiers}
+    \label{fig:comparison}
+\end{figure}
 
 \section{Conclusions}
-% TODO: fill in after all steps are done
+
+The project applied PCA-based dimensionality reduction followed by Gaussian Naive Bayes and Decision Tree classifiers to the Cleveland Heart Disease dataset. After removing 6 incomplete records and standardizing all features, PCA reduced the feature space from 13 to 10 components while retaining 90\% of the total variance. The relatively small reduction reflects the low redundancy among the clinical features in this dataset.
+
+Both classifiers were tuned with the medical context in mind, prioritizing recall for the disease class over overall accuracy. Naive Bayes was adjusted through decision threshold optimization, while the Decision Tree was tuned using class weighting. Both reached a disease recall of 0.92, but Naive Bayes proved superior in all other metrics, achieving 88\% accuracy and an F1-score of 0.86 compared to 80\% and 0.79 for the Decision Tree.
+
+The results suggest that Gaussian Naive Bayes is better suited for this dataset, likely because its probabilistic nature aligns well with the relatively small sample size and the mix of feature types. The threshold tuning approach also proved more effective than class weighting, offering finer-grained control over the precision-recall tradeoff.
 
 \begin{thebibliography}{9}
 
