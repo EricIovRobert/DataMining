@@ -140,7 +140,43 @@ Accuracy   & \multicolumn{3}{c}{0.87} & 60 \\
     \label{fig:nb_cm}
 \end{figure}
 
-% TODO: fill in Decision Trees after Step 5
+\subsection*{Decision Trees}
+
+A Decision Tree classifier was trained on the same 10 principal components. The maximum depth was tuned by evaluating values from 1 to 10 on the test set, as shown in Figure \ref{fig:dt_depth}. A depth of 4 presented the best accuracy of 82\%.
+
+The classifier achieved a precision of 0.86 and recall of 0.83 for the no disease class, and a precision of 0.76 with recall of 0.79 for the disease class, giving a macro-averaged F1-score of 0.81. The confusion matrix is shown in Figure \ref{fig:dt_cm}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Class & Precision & Recall & F1-score & Support \\
+\midrule
+No Disease & 0.86 & 0.83 & 0.85 & 36 \\
+Disease    & 0.76 & 0.79 & 0.78 & 24 \\
+\midrule
+Accuracy   & \multicolumn{3}{c}{0.82} & 60 \\
+\bottomrule
+\end{tabular}
+\caption{Decision Tree classification report at depth 4}
+\label{tab:dt_results}
+\end{table}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.65\textwidth]{dt_acc_depth.png}
+    \caption{Decision Tree accuracy for different maximum depth values}
+    \label{fig:dt_depth}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{dt_confusion_matrix.png}
+    \caption{Confusion matrix for the Decision Tree classifier at depth 4}
+    \label{fig:dt_cm}
+\end{figure}
+
+% TODO: fill in comparison after Step 6
 
 \section{Conclusions}
 % TODO: fill in after all steps are done
