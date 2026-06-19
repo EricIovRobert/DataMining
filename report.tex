@@ -22,45 +22,38 @@
 
 \section{Description of the Dataset}
 
-The Cleveland Heart Disease dataset was obtained from the UCI Machine Learning Repository \cite{uci}. It contains 303 records and 13 features, along with a binary target variable indicating the presence (1) or absence (0) of heart disease. The target was derived by binarizing the original ordinal variable (values 0–4), where any value greater than 0 was mapped to 1.
+The Heart Disease dataset was collected by Janosi et al. \cite{janosi1989} and made available through the UCI Machine Learning Repository \cite{uci}. It aggregates data from four clinical sites: Cleveland, Hungary, Switzerland, and VA Long Beach. Only the Cleveland database has been used in published machine learning experiments, and it is the one used in this project. While the full dataset contains 76 attributes, only 14 are used in practice: 13 features and one target variable, across 303 records. The target variable indicates the presence or absence of heart disease. It was derived from an original ordinal variable with values 0 to 4, where 0 means no disease and any value above 0 was remapped to 1 \cite{uci}.
 
-\subsection*{Features}
-
-The dataset includes a mix of continuous and categorical attributes:
-
-\begin{itemize}
-    \item \textbf{Continuous:} age, trestbps (resting blood pressure), chol (serum cholesterol), thalach (maximum heart rate), oldpeak (ST depression)
-    \item \textbf{Binary:} sex, fbs (fasting blood sugar $>$ 120 mg/dl), exang (exercise-induced angina)
-    \item \textbf{Categorical:} cp (chest pain type), restecg (resting ECG results), slope (slope of peak exercise ST segment), ca (number of major vessels), thal (thalassemia type)
-\end{itemize}
+The 13 features cover a range of clinical measurements and can be grouped by type. Five are continuous: \texttt{age} in years, \texttt{trestbps} for resting blood pressure in mm Hg, \texttt{chol} for serum cholesterol in mg/dl, \texttt{thalach} for maximum heart rate achieved, and \texttt{oldpeak} for ST depression induced by exercise relative to rest. Three are binary: \texttt{sex}, \texttt{fbs} indicating whether fasting blood sugar exceeds 120 mg/dl, and \texttt{exang} for exercise-induced angina. The remaining five are categorical. \texttt{cp} encodes chest pain type with four values: typical angina, atypical angina, non-anginal pain, and asymptomatic. \texttt{restecg} describes resting ECG results. \texttt{slope} captures the slope of the peak exercise ST segment. \texttt{ca} gives the number of major vessels colored by fluoroscopy, ranging from 0 to 3. \texttt{thal} represents thalassemia type, with value 3 for normal, 6 for fixed defect, and 7 for reversible defect.
 
 \subsection*{Statistical Summary}
 
-Key statistics for the continuous features are summarized below:
+Table \ref{tab:stats} reports the mean, standard deviation, minimum and maximum for the continuous features. The patients range in age from 29 to 77 years, with a mean of 54.4. Cholesterol values show a wide spread (126--564 mg/dl), and \texttt{oldpeak} is notably right-skewed, with a mean of 1.04 but a maximum of 6.2.
 
 \begin{table}[h]
 \centering
-\begin{tabular}{lcccc}
+\begin{tabular}{lccccc}
 \toprule
-Feature & Mean & Std & Min & Max \\
+Feature & Unit & Mean & Std & Min & Max \\
 \midrule
-age       & 54.44 & 9.04  & 29  & 77  \\
-trestbps  & 131.69 & 17.60 & 94  & 200 \\
-chol      & 246.69 & 51.78 & 126 & 564 \\
-thalach   & 149.61 & 22.88 & 71  & 202 \\
-oldpeak   & 1.04  & 1.16  & 0.0 & 6.2 \\
+age       & years  & 54.44  & 9.04  & 29  & 77  \\
+trestbps  & mm Hg  & 131.69 & 17.60 & 94  & 200 \\
+chol      & mg/dl  & 246.69 & 51.78 & 126 & 564 \\
+thalach   & bpm    & 149.61 & 22.88 & 71  & 202 \\
+oldpeak   & --     & 1.04   & 1.16  & 0.0 & 6.2 \\
 \bottomrule
 \end{tabular}
 \caption{Statistical summary of continuous features}
+\label{tab:stats}
 \end{table}
 
 \subsection*{Missing Values}
 
-The dataset contains 6 missing values in total: 4 in the \texttt{ca} column and 2 in the \texttt{thal} column, representing approximately 2\% of the data. All other features are complete.
+The dataset is nearly complete. Only 6 values are missing across the entire dataset: 4 in the \texttt{ca} column and 2 in \texttt{thal}. All other features are fully observed.
 
 \subsection*{Class Distribution}
 
-The dataset is slightly imbalanced: 164 records (54.1\%) belong to the negative class (no disease) and 139 records (45.9\%) to the positive class (disease), as shown in Figure \ref{fig:class_dist}. The imbalance is mild and does not require special resampling techniques.
+The target variable is slightly imbalanced: 164 records (54.1\%) belong to the negative class (no disease) and 139 records (45.9\%) to the positive class (disease), as shown in Figure \ref{fig:class_dist}. The difference is small enough that no resampling technique is required.
 
 \begin{figure}[h]
     \centering
@@ -71,7 +64,7 @@ The dataset is slightly imbalanced: 164 records (54.1\%) belong to the negative 
 
 \subsection*{Feature Distributions}
 
-The distributions of all features are shown in Figure \ref{fig:hist}. Several features (e.g. \texttt{sex}, \texttt{fbs}, \texttt{exang}) are binary and heavily skewed toward one value. Continuous features such as \texttt{age} and \texttt{chol} follow approximately normal distributions, while \texttt{oldpeak} is right-skewed.
+The distributions of all features are shown in Figure \ref{fig:hist}. Binary features such as \texttt{sex}, \texttt{fbs}, and \texttt{exang} are heavily concentrated on one value, reflecting the demographics of the patient sample (predominantly male, with most patients not reporting exercise-induced angina). Among the continuous features, \texttt{age} and \texttt{chol} approximate a normal distribution, while \texttt{oldpeak} is right-skewed with a large number of zero values.
 
 \begin{figure}[h]
     \centering
@@ -82,7 +75,7 @@ The distributions of all features are shown in Figure \ref{fig:hist}. Several fe
 
 \subsection*{Correlation Analysis}
 
-The correlation matrix (Figure \ref{fig:corr}) reveals that the features most correlated with the target are \texttt{thal} (0.53), \texttt{ca} (0.46), \texttt{cp} (0.41), \texttt{thalach} (-0.42), and \texttt{exang} (0.43). Features such as \texttt{fbs} and \texttt{restecg} show very low correlation with the target and may contribute less to classification performance.
+The correlation matrix in Figure \ref{fig:corr} shows the pairwise linear relationships between all features and the target. The strongest positive correlations with the target are found in \texttt{thal} (0.53), \texttt{ca} (0.46), \texttt{exang} (0.43), and \texttt{cp} (0.41). Maximum heart rate (\texttt{thalach}) is negatively correlated with the target (-0.42), meaning higher heart rate is associated with lower disease probability. Features such as \texttt{fbs} (0.03) and \texttt{restecg} (0.17) show weak correlation with the target and are expected to contribute less to classification.
 
 \begin{figure}[h]
     \centering
@@ -101,9 +94,22 @@ The correlation matrix (Figure \ref{fig:corr}) reveals that the features most co
 % TODO: fill in after all steps are done
 
 \begin{thebibliography}{9}
+
+\bibitem{janosi1989}
+    A. Janosi, W. Steinbrunn, M. Pfisterer, R. Detrano.
+    \textit{Heart Disease Dataset}.
+    UCI Machine Learning Repository, 1989.
+    \url{https://doi.org/10.24432/C52P4X}
+
 \bibitem{uci}
-    UCI Machine Learning Repository: Heart Disease Dataset.
-    \url{https://archive.ics.uci.edu/ml/datasets/heart+disease}
+    UCI Machine Learning Repository.
+    \url{https://archive.ics.uci.edu/dataset/45/heart+disease}
+
+\bibitem{detrano1989}
+    R. Detrano, A. Jánosi, W. Steinbrunn, M. Pfisterer, J. Schmid, S. Sandhu, K. Guppy, S. Lee, V. Froelicher.
+    International application of a new probability algorithm for the diagnosis of coronary artery disease.
+    \textit{American Journal of Cardiology}, 1989.
+
 \end{thebibliography}
 
 \end{document}
