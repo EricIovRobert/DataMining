@@ -110,7 +110,37 @@ To retain at least 90\% of the total variance, 10 principal components are requi
 \end{figure}
 
 \section{Results}
-% TODO: fill in after Steps 4, 5, and 6
+
+\subsection*{Naive Bayes}
+
+A Gaussian Naive Bayes classifier was trained on the 10 principal components obtained in the previous step. The dataset was split into 80\% for training and 20\% for testing, resulting in 237 training samples and 60 test samples.
+
+At the default decision threshold of 0.5, the classifier achieved an accuracy of 85\% with a recall of 0.79 for the disease class. Since missing a sick patient is more costly than a false alarm in a medical context, the decision threshold was lowered to 0.3. This increased disease recall to 0.92 and overall accuracy to 87\%, at the cost of a small reduction in disease precision from 0.83 to 0.79. The final results at threshold 0.3 are reported in Table \ref{tab:nb_results} and the confusion matrix is shown in Figure \ref{fig:nb_cm}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Class & Precision & Recall & F1-score & Support \\
+\midrule
+No Disease & 0.94 & 0.83 & 0.88 & 36 \\
+Disease    & 0.79 & 0.92 & 0.85 & 24 \\
+\midrule
+Accuracy   & \multicolumn{3}{c}{0.87} & 60 \\
+\bottomrule
+\end{tabular}
+\caption{Naive Bayes classification report at threshold 0.3}
+\label{tab:nb_results}
+\end{table}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{0.3_nb.png}
+    \caption{Confusion matrix for the Naive Bayes classifier at threshold 0.3}
+    \label{fig:nb_cm}
+\end{figure}
+
+% TODO: fill in Decision Trees after Step 5
 
 \section{Conclusions}
 % TODO: fill in after all steps are done
