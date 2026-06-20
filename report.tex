@@ -143,13 +143,6 @@ Accuracy   & \multicolumn{3}{c}{0.88} & 60 \\
 \label{tab:nb_results}
 \end{table}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{nb_0.35_cm.png}
-    \caption{Confusion matrix for the Naive Bayes classifier at threshold 0.35}
-    \label{fig:nb_cm}
-\end{figure}
-
 \subsection*{Decision Trees}
 
 A Decision Tree classifier was trained on the same 10 principal components. The maximum depth was tuned by evaluating values from 1 to 10 on the test set, as shown in Figure \ref{fig:dt_depth}. A depth of 4 yielded the best accuracy of 82\%.
@@ -181,9 +174,19 @@ Accuracy   & \multicolumn{3}{c}{0.80} & 60 \\
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{dt_final_cm.png}
-    \caption{Confusion matrix for the Decision Tree classifier at depth 4 with class weight 4}
-    \label{fig:dt_cm}
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{nb_0.35_cm.png}
+        \caption{Confusion matrix for the Naive Bayes classifier at threshold 0.35}
+        \label{fig:nb_cm}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{dt_final_cm.png}
+        \caption{Confusion matrix for the Decision Tree classifier at depth 4 with class weight 4}
+        \label{fig:dt_cm}
+    \end{minipage}
 \end{figure}
 
 \subsection*{Comparison}
@@ -192,7 +195,28 @@ Both classifiers were tuned to achieve a disease recall of 0.92, using different
 
 Naive Bayes achieves a higher accuracy of 88\% and a disease precision of 0.81, giving an F1-score of 0.86. The Decision Tree reaches the same recall at a lower accuracy of 80\% and disease precision of 0.69, resulting in an F1-score of 0.79. Naive Bayes is the better performing classifier overall, particularly in how it balances recall with precision.
 
-\begin{table}[h]
+Placing these results in a broader context, a machine learning framework evaluated on the same 303-sample Cleveland dataset \cite{mlframework2025} found that Random Forest reached 91\% accuracy with an F1-score of 0.89, which is higher than what either classifier achieved here. Alfadhly et al.\ \cite{alfadhly2025} evaluated 12 classifiers on a merged version of the UCI heart disease dataset that combines all four institutional subsets and applies SMOTE oversampling, so a direct numerical comparison is not straightforward. Under standardization, their Naive Bayes obtained 88\% accuracy and their Decision Tree obtained 80\%, values that closely match our own despite the different dataset scope. Overall, the performance reported here is consistent with published results for these classifier families on similar data, while more complex ensemble methods tend to achieve higher accuracy.
+
+The UCI Machine Learning Repository also publishes benchmark results submitted by users for this dataset \cite{uci}. Figures \ref{fig:baseline_acc} and \ref{fig:baseline_prec} show the reported accuracy and precision distributions for five classifier families. The median accuracy ranges from approximately 65\% for Support Vector Classification to around 81--82\% for XGBoost, Random Forest, and Logistic Regression. The Naive Bayes result of 88\% obtained in this project falls above these median benchmarks, while the Decision Tree result of 80\% is within the typical range. It should be noted that the UCI benchmarks aggregate results from many users with varying preprocessing pipelines and train/test splits, so they serve as a rough reference rather than a direct comparison.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{baseline_accuracy.png}
+    \caption{UCI benchmark: accuracy distribution by classifier}
+    \label{fig:baseline_acc}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{baseline_precision.png}
+    \caption{UCI benchmark: precision distribution by classifier}
+    \label{fig:baseline_prec}
+\end{minipage}
+\end{figure}
+
+\begin{table}[H]
 \centering
 \begin{tabular}{lcccc}
 \toprule
@@ -225,17 +249,19 @@ The results suggest that Gaussian Naive Bayes is better suited for this dataset,
 \begin{thebibliography}{9}
 
 \bibitem{detrano1989}
-    R. Detrano, A. Jánosi, W. Steinbrunn, M. Pfisterer, J. Schmid, S. Sandhu, K. Guppy, S. Lee, V. Froelicher.
+    R. Detrano, A. Janosi, W. Steinbrunn, M. Pfisterer, J.J. Schmid, S. Sandhu, K.H. Guppy, S. Lee, V. Froelicher.
     International application of a new probability algorithm for the diagnosis of coronary artery disease.
-    \textit{American Journal of Cardiology}, 1989.
+    \textit{American Journal of Cardiology}, vol.\ 64, no.\ 5, pp.\ 304--310, 1989.
+    \url{https://doi.org/10.1016/0002-9149(89)90524-9}
 
 \bibitem{alfadhly2025}
-    A. Alfadhly et al.
+    W. Alsabhan, A. Alfadhly.
     Effectiveness of machine learning models in diagnosis of heart disease: a comparative study.
     \textit{Scientific Reports}, 15, 2025.
     \url{https://doi.org/10.1038/s41598-025-09423-y}
 
 \bibitem{mlframework2025}
+A. A. Lamir, S. Razzagzadeh, Z. Rezaei.
     A comprehensive machine learning framework for heart disease prediction: performance evaluation and future perspectives.
     \textit{arXiv preprint}, 2025.
     \url{https://arxiv.org/abs/2505.09969}
